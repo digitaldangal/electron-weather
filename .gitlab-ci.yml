@@ -1,0 +1,26 @@
+image: node:8
+
+before_script:
+  - yarn
+cache:
+  paths:
+    - node_modules/
+    - app/node_modules/
+
+stages:
+  - test
+
+run_tests:
+  stage: test
+  script:
+    - yarn test
+
+lint:
+  stage: test
+  script:
+    - yarn lint
+
+flow:
+  stage: test
+  script:
+    - yarn flow

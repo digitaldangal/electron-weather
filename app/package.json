@@ -1,0 +1,18 @@
+{
+  "name": "electron-weather",
+  "productName": "electron-weather",
+  "version": "0.1.0",
+  "description": "A desktop weather app using React, Electron, Flow, Redux, Webpack, and Material-UI.",
+  "main": "./main.prod.js",
+  "author": {
+    "name": "Taylor Growden",
+    "email": "taylor.growden@gmail.com",
+    "url": "https://github.com/tgrowden"
+  },
+  "scripts": {
+    "electron-rebuild": "node -r babel-register ../internals/scripts/ElectronRebuild.js",
+    "postinstall": "npm run electron-rebuild"
+  },
+  "license": "MIT",
+  "dependencies": {}
+}
