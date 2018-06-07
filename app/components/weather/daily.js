@@ -15,6 +15,7 @@ import CloudCover from './field/cloud-cover'
 import UVIndex from './field/uv-index'
 import Visibility from './field/visibility'
 import Ozone from './field/ozone'
+import GeneralSummary from './general-summary'
 
 type Props = {
 	classes: Object,
@@ -45,6 +46,7 @@ class Daily extends React.Component<Props> {
 
 		return (
 			<div className={classes.root}>
+				<GeneralSummary summary={weather.summary} />
 				{weather.data.map(day => (
 					<div key={`day-${day.time}`} className={classes.day}>
 						<Summary
