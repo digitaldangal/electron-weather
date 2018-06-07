@@ -54,14 +54,17 @@ class Daily extends React.Component<Props> {
 							timezone={timezone}
 							dateFormat="ddd, MMM D, YYYY"
 						/>
-						<PrecipitationIntensity value={day.precipIntensity} units={units} />
+						<TemperatureRange
+							min={day.temperatureLow}
+							max={day.temperatureHigh}
+							units={units}
+						/>
 						<PrecipitationProbability
 							value={day.precipProbability}
 							units={units}
 						/>
-						<TemperatureRange
-							min={day.temperatureLow}
-							max={day.temperatureHigh}
+						<PrecipitationIntensity
+							value={day.precipIntensity}
 							units={units}
 						/>
 						<DewPoint value={day.dewPoint} units={units} />

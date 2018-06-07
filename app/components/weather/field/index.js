@@ -1,18 +1,34 @@
 import React from 'react'
 import Typography from '@material-ui/core/Typography'
 import Grid from '@material-ui/core/Grid'
+import { withStyles } from '@material-ui/core/styles'
+
+const styles = (theme: MuiTheme) => ({
+	root: {
+		marginTop: theme.spacing.unit,
+		marginBottom: theme.spacing.unit
+	}
+})
 
 type Props = {
+	classes: Object,
 	value?: any,
 	label?: string,
 	units?: string,
 	spaceBeforeUnits?: boolean
 }
 
-const Field = ({ value, label, units, spaceBeforeUnits, ...props }: Props) => {
+const Field = ({
+	classes,
+	value,
+	label,
+	units,
+	spaceBeforeUnits,
+	...props
+}: Props) => {
 	if (!value) return null
 	return (
-		<div {...props}>
+		<div className={classes.root} {...props}>
 			<Grid container>
 				<Grid item xs={12} sm={6} md={3}>
 					{!!label && <Typography>{label}: </Typography>}
@@ -35,4 +51,4 @@ Field.defaultProps = {
 	spaceBeforeUnits: false
 }
 
-export default Field
+export default withStyles(styles)(Field)

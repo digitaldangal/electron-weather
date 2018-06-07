@@ -24,7 +24,7 @@ const styles = (theme: MuiTheme) => ({
 })
 
 const Summary = (props: Props) => (
-	<Grid container className={props.classes.container}>
+	<Grid container spacing={8} className={props.classes.container}>
 		<Grid item xs={12} sm={4}>
 			<Typography variant="subheading">
 				{formatDate({

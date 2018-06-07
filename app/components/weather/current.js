@@ -47,25 +47,25 @@ class Current extends React.Component<Props> {
 						summary={weather.summary}
 						timezone={timezone}
 					/>
-					<NearestStormDistance
-						value={weather.nearestStormDistance}
-						units={units}
-					/>
-					<NearestStormBearing
-						value={weather.nearestStormBearing}
-						units={units}
-					/>
-					<PrecipitationIntensity
-						value={weather.precipIntensity}
+					<Temperature value={weather.temperature} units={units} />
+					<ApparentTemperature
+						value={weather.apparentTemperature}
 						units={units}
 					/>
 					<PrecipitationProbability
 						value={weather.precipProbability}
 						units={units}
 					/>
-					<Temperature value={weather.temperature} units={units} />
-					<ApparentTemperature
-						value={weather.apparentTemperature}
+					<PrecipitationIntensity
+						value={weather.precipIntensity}
+						units={units}
+					/>
+					<NearestStormDistance
+						value={weather.nearestStormDistance}
+						units={units}
+					/>
+					<NearestStormBearing
+						value={weather.nearestStormBearing}
 						units={units}
 					/>
 					<DewPoint value={weather.dewPoint} units={units} />

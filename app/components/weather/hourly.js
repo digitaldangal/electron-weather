@@ -54,17 +54,17 @@ class Hourly extends React.Component<Props> {
 							summary={hour.summary}
 							timezone={timezone}
 						/>
-						<PrecipitationIntensity
-							value={hour.precipIntensity}
+						<Temperature value={hour.temperature} units={units} />
+						<ApparentTemperature
+							value={hour.apparentTemperature}
 							units={units}
 						/>
 						<PrecipitationProbability
 							value={hour.precipProbability}
 							units={units}
 						/>
-						<Temperature value={hour.temperature} units={units} />
-						<ApparentTemperature
-							value={hour.apparentTemperature}
+						<PrecipitationIntensity
+							value={hour.precipIntensity}
 							units={units}
 						/>
 						<DewPoint value={hour.dewPoint} units={units} />
