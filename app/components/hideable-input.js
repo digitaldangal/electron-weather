@@ -10,7 +10,7 @@ import VisibilityOff from '@material-ui/icons/VisibilityOff'
 import FormHelperText from '@material-ui/core/FormHelperText'
 
 type Props = {
-	onChange: (e: SyntheticInputEvent<HTMLInputElement>) => mixed,
+	onChange: (e: SyntheticInputEvent<HTMLInputElement>) => void,
 	value: string,
 	label?: string,
 	fullWidth?: boolean,

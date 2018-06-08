@@ -107,6 +107,7 @@ class Home extends Component<Props, State> {
 	handleUnitChange(e) {
 		const preferredUnits = e.target.value
 		this.props.setPreferredUnits(
+			// $FlowFixMe
 			preferredUnits,
 			this.props.coords,
 			this.props.weatherApiKey
