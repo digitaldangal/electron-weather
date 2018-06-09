@@ -73,80 +73,91 @@ export type CurrentWeather = {
 	windSpeed?: number
 }
 
+export type MinutelyWeatherData = Array<{
+	time: number,
+	precipIntensity: number,
+	precipProbability: number,
+	precipIntensityError?: number,
+	precipType?: string
+}>
+
 export type MinutelyWeather = {
 	icon?: IconTypes,
 	summary?: string,
-	data: Array<{
-		time: number,
-		precipIntensity: number,
-		precipProbability: number,
-		precipIntensityError?: number,
-		precipType?: string
-	}>
+	data: MinutelyWeatherData
 }
+
+export type HourlyWeatherData = Array<{
+	apparentTemperature?: number,
+	cloudCover?: number,
+	dewPoint?: number,
+	humidity?: number,
+	icon?: IconTypes,
+	ozone?: number,
+	precipIntensity?: number,
+	precipProbability?: number,
+	precipType?: PrecipTypes,
+	pressure?: number,
+	summary?: string,
+	temperature?: number,
+	time: number,
+	uvIndex?: number,
+	visibility?: number,
+	windBearing?: number,
+	windGust?: number,
+	windSpeed?: number
+}>
 
 export type HourlyWeather = {
 	summary: string,
 	icon: IconTypes,
-	data: Array<{
-		apparentTemperature?: number,
-		cloudCover?: number,
-		dewPoint?: number,
-		humidity?: number,
-		icon?: IconTypes,
-		ozone?: number,
-		precipIntensity?: number,
-		precipProbability?: number,
-		precipType?: PrecipTypes,
-		pressure?: number,
-		summary?: string,
-		temperature?: number,
-		time: number,
-		uvIndex?: number,
-		visibility?: number,
-		windBearing?: number,
-		windGust?: number,
-		windSpeed?: number
-	}>
+	data: HourlyWeatherData
 }
+
+export type DailyWeatherData = Array<{
+	apparentTemperatureHigh?: number,
+	apparentTemperatureHighTime?: number,
+	apparentTemperatureLow?: number,
+	apparentTemperatureLowTime?: number,
+	cloudCover?: number,
+	dewPoint?: number,
+	humidity?: number,
+	icon?: IconTypes,
+	moonPhase: number,
+	ozone?: number,
+	precipIntensity?: number,
+	precipIntensityMax?: number,
+	precipIntensityMaxTime?: number,
+	precipProbability?: number,
+	precipType?: PrecipTypes,
+	pressure?: number,
+	summary?: string,
+	sunriseTime: number,
+	sunsetTime: number,
+	temperatureHigh?: number,
+	temperatureHighTime?: number,
+	temperatureLow?: number,
+	temperatureLowTime?: number,
+	time: number,
+	uvIndex?: number,
+	uvIndexTime?: number,
+	visibility?: number,
+	windBearing?: number,
+	windGust?: number,
+	windGustTime?: number,
+	windSpeed?: number
+}>
 
 export type DailyWeather = {
 	summary: string,
 	icon: IconTypes,
-	data: Array<{
-		apparentTemperatureHigh?: number,
-		apparentTemperatureHighTime?: number,
-		apparentTemperatureLow?: number,
-		apparentTemperatureLowTime?: number,
-		cloudCover?: number,
-		dewPoint?: number,
-		humidity?: number,
-		icon?: IconTypes,
-		moonPhase: number,
-		ozone?: number,
-		precipIntensity?: number,
-		precipIntensityMax?: number,
-		precipIntensityMaxTime?: number,
-		precipProbability?: number,
-		precipType?: PrecipTypes,
-		pressure?: number,
-		summary?: string,
-		sunriseTime: number,
-		sunsetTime: number,
-		temperatureHigh?: number,
-		temperatureHighTime?: number,
-		temperatureLow?: number,
-		temperatureLowTime?: number,
-		time: number,
-		uvIndex?: number,
-		uvIndexTime?: number,
-		visibility?: number,
-		windBearing?: number,
-		windGust?: number,
-		windGustTime?: number,
-		windSpeed?: number
-	}>
+	data: DailyWeatherData
 }
+
+export type WeatherData =
+	| DailyWeatherData
+	| HourlyWeatherData
+	| MinutelyWeatherData
 
 export type WeatherAlertSeverity = 'advisory' | 'watch' | 'warning'
 

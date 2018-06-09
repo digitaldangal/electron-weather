@@ -17,6 +17,8 @@ import PlacesAutocomplete, {
 	getLatLng
 } from 'react-places-autocomplete'
 import Script from 'react-load-script'
+import { Link } from 'react-router-dom'
+import Button from '@material-ui/core/Button'
 import WeatherTabs from './weather'
 
 type Props = {
@@ -50,6 +52,14 @@ type State = {
 
 const styles = (theme: MuiTheme) => ({
 	root: {},
+	errorRoot: {
+		display: 'flex',
+		flexDirection: 'column',
+		alignItems: 'center',
+		justifyContent: 'space-between',
+		height: '40vh',
+		textAlign: 'center'
+	},
 	hidden: {
 		display: 'none'
 	},
@@ -127,7 +137,22 @@ class Home extends Component<Props, State> {
 			fetchingWeather,
 			preferredUnits
 		} = this.props
+
 		const hasPlacesKey = googleApiKey.length > 0
+		const hasWeatherKey = weatherApiKey.length > 0
+
+		if (!hasPlacesKey || !hasWeatherKey) {
+			return (
+				<div className={classes.errorRoot}>
+					<Typography variant="headline">
+						You must input both a Google Places API key and a Dark Sky API key.
+					</Typography>
+					<Button color="secondary" component={Link} to="/settings">
+						Go to Settings
+					</Button>
+				</div>
+			)
+		}
 
 		return (
 			<React.Fragment>

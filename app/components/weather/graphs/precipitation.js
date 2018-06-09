@@ -12,21 +12,22 @@ import {
 import { withStyles } from '@material-ui/core/styles'
 import { Typography } from '@material-ui/core'
 import DefaultTooltipContent from 'recharts/lib/component/DefaultTooltipContent'
-import formatDate from './lib/format-date'
+import formatDate from '../lib/format-date'
+import graphStyles from './styles'
+import getUnits from '../lib/units'
 
 const styles = (theme: MuiTheme) => ({
 	root: {
 		marginTop: theme.spacing.unit * 3
-	},
-	chart: {}
+	}
 })
 
 type Props = {
 	classes: Object,
 	theme: MuiTheme,
-	weather: MinutelyWeather,
+	data: WeatherData,
 	timezone: string,
-	units: Units
+	dateFormat?: string
 }
 
 const CustomTooltip = (props: { payload: Array<Object>, units: Units }) => {
@@ -40,11 +41,21 @@ const CustomTooltip = (props: { payload: Array<Object>, units: Units }) => {
 						value: `${i.value.toFixed()}%`,
 						name: `Chance of ${i.payload.type || 'Precipitation'}`
 					}
+				/* eslint-disable no-case-declarations */
 				case 'Precipitation Intensity':
+					let value
+					if (i.value > 0 && !!i.payload.precipIntensityError) {
+						value = `${i.value} (± ${i.payload.precipIntensityError}) ${
+							units.precipIntensity
+						}`
+					} else {
+						value = `${i.value} ${units.precipIntensity}`
+					}
 					return {
 						...i,
-						value: `${i.value} ${units.precipIntensity}`
+						value
 					}
+				/* eslint-enable no-case-declarations */
 				default:
 					return i
 			}
@@ -64,12 +75,16 @@ const CustomTooltip = (props: { payload: Array<Object>, units: Units }) => {
 	)
 }
 
-class MinuteGraph extends React.Component<Props> {
-	get weatherData() {
-		const { weather, timezone } = this.props
+class PrecipitationGraph extends React.Component<Props> {
+	static defaultProps = {
+		dateFormat: 'h:mm a'
+	}
 
-		return weather.data.map(datum => ({
-			time: formatDate({ time: datum.time, timezone, format: 'h:mm a' }),
+	get weatherData() {
+		const { data, timezone, dateFormat } = this.props
+
+		return data.map(datum => ({
+			time: formatDate({ time: datum.time, timezone, format: dateFormat }),
 			'Precipitation Intensity': datum.precipIntensity,
 			'Precipitation Probability': datum.precipProbability * 100,
 			precipIntensityError: datum.precipIntensityError,
@@ -78,43 +93,44 @@ class MinuteGraph extends React.Component<Props> {
 	}
 
 	render() {
-		const { classes, theme, units } = this.props
+		const { classes, theme } = this.props
+
+		const {
+			responsiveContainer,
+			lineChart,
+			primaryLine,
+			secondaryLine,
+			xAxis,
+			yAxis,
+			tooltip,
+			legend
+		} = graphStyles(theme)
+
+		const units = getUnits()
 
 		return (
 			<div className={classes.root}>
-				<ResponsiveContainer minWidth={100} minHeight={100} aspect={3}>
-					<LineChart data={this.weatherData} className={classes.chart}>
+				<ResponsiveContainer {...responsiveContainer}>
+					<LineChart data={this.weatherData} {...lineChart}>
 						<Line
 							type="monotone"
 							dataKey="Precipitation Probability"
-							stroke={theme.palette.primary.main}
+							{...primaryLine}
 						/>
 						<Line
 							type="monotone"
 							dataKey="Precipitation Intensity"
-							stroke={theme.palette.secondary.main}
+							{...secondaryLine}
 							dot={false}
 						/>
-						<XAxis dataKey="time" tick={{ fill: theme.palette.text.primary }} />
-						<YAxis
-							domain={[0, 100]}
-							tick={{ fill: theme.palette.text.primary }}
-						/>
+						<XAxis dataKey="time" {...xAxis} />
+						<YAxis domain={[0, 100]} {...yAxis} />
 						<CartesianGrid strokeDasharray="3 3" />
 						<Tooltip
-							wrapperStyle={{
-								backgroundColor: theme.palette.background.paper,
-								borderColor: theme.palette.background.paper,
-								boxShadow: theme.shadows[5],
-								borderRadius: 2
-							}}
+							{...tooltip}
 							content={props => <CustomTooltip {...props} units={units} />}
 						/>
-						<Legend
-							wrapperStyle={{
-								color: theme.palette.text.primary
-							}}
-						/>
+						<Legend {...legend} />
 					</LineChart>
 				</ResponsiveContainer>
 			</div>
@@ -122,4 +138,4 @@ class MinuteGraph extends React.Component<Props> {
 	}
 }
 
-export default withStyles(styles, { withTheme: true })(MinuteGraph)
+export default withStyles(styles, { withTheme: true })(PrecipitationGraph)

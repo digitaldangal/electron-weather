@@ -16,7 +16,7 @@ import UVIndex from './field/uv-index'
 import Visibility from './field/visibility'
 import Ozone from './field/ozone'
 import GeneralSummary from './general-summary'
-import DailyWeatherGraph from '../weather-graphs/daily-weather-graph'
+import Graphs from './graphs'
 
 type Props = {
 	classes: Object,
@@ -47,7 +47,7 @@ class Daily extends React.Component<Props> {
 
 		return (
 			<div className={classes.root}>
-				<DailyWeatherGraph data={weather.data} timezone={timezone} />
+				<Graphs timezone={timezone} data={weather.data} exclude={['temp']} />
 				<GeneralSummary summary={weather.summary} />
 				{weather.data.map(day => (
 					<div key={`day-${day.time}`} className={classes.day}>
@@ -67,10 +67,7 @@ class Daily extends React.Component<Props> {
 							value={day.precipProbability}
 							units={units}
 						/>
-						<PrecipitationIntensity
-							value={day.precipIntensity}
-							units={units}
-						/>
+						<PrecipitationIntensity value={day.precipIntensity} units={units} />
 						<DewPoint value={day.dewPoint} units={units} />
 						<Humidity value={day.humidity} units={units} />
 						<WindSpeed value={day.windSpeed} units={units} />

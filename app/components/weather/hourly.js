@@ -17,6 +17,7 @@ import UVIndex from './field/uv-index'
 import Visibility from './field/visibility'
 import Ozone from './field/ozone'
 import GeneralSummary from './general-summary'
+import Graphs from './graphs'
 
 type Props = {
 	classes: Object,
@@ -47,6 +48,13 @@ class Hourly extends React.Component<Props> {
 
 		return (
 			<div className={classes.root}>
+				<Graphs
+					timezone={timezone}
+					data={weather.data}
+					exclude={['tempRange']}
+					defaultGraph="temp"
+					precipDateFormat="ddd h:mm a"
+				/>
 				<GeneralSummary summary={weather.summary} />
 				{weather.data.map(hour => (
 					<div key={`hour-${hour.time}`} className={classes.hour}>

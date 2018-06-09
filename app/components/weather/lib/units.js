@@ -1,3 +1,5 @@
+import { store } from '../../../store/configureStore'
+
 export const si: Units = {
 	apparentTemperature: '°C',
 	apparentTemperatureHigh: '°C',
@@ -92,4 +94,17 @@ export const us: Units = {
 	windBearing: '°',
 	windGust: 'mph',
 	windSpeed: 'mph'
+}
+
+export default function getUnits() {
+	const state = store.getState()
+	const preferredUnits = state.home.preferredUnits || 'us'
+
+	const units = {
+		us,
+		uk2,
+		si,
+		ca
+	}
+	return units[preferredUnits]
 }

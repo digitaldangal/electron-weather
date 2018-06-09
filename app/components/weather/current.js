@@ -18,7 +18,7 @@ import CloudCover from './field/cloud-cover'
 import UVIndex from './field/uv-index'
 import Visibility from './field/visibility'
 import Ozone from './field/ozone'
-import MinuteGraph from './minute-graph'
+import PrecipitationGraph from './graphs/precipitation'
 
 type Props = {
 	classes: Object,
@@ -78,7 +78,7 @@ class Current extends React.Component<Props> {
 					<Visibility value={weather.visibility} units={units} />
 					<Ozone value={weather.ozone} units={units} />
 				</div>
-				<MinuteGraph weather={minutely} timezone={timezone} units={units} />
+				<PrecipitationGraph data={minutely.data} timezone={timezone} />
 			</div>
 		)
 	}
