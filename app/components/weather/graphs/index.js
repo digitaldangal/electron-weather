@@ -27,37 +27,20 @@ type Props = {
 	classes: Object,
 	data: WeatherData,
 	timezone: string,
-	defaultGraph?: GraphOptions,
+	graph: GraphOptions,
 	exclude?: Array<GraphOptions>,
 	tempRangeDateFormat?: string,
 	tempDateFormat?: string,
-	precipDateFormat?: string
+	precipDateFormat?: string,
+	onGraphChange: (graph: GraphOptions) => void
 }
 
-type State = {
-	graph: GraphOptions
-}
-
-class Graphs extends React.Component<Props, State> {
+class Graphs extends React.Component<Props> {
 	static defaultProps = {
-		defaultGraph: 'tempRange',
 		exclude: [],
 		tempRangeDateFormat: undefined,
 		tempDateFormat: undefined,
 		precipDateFormat: 'ddd, MMM D, YYYY'
-	}
-
-	constructor(props) {
-		super(props)
-
-		this.state = {
-			graph: props.defaultGraph
-		}
-	}
-
-	handleSelectChange = (e: SyntheticEvent<HTMLElement>) => {
-		// $FlowFixMe
-		this.setState({ graph: e.target.value })
 	}
 
 	render() {
@@ -68,9 +51,11 @@ class Graphs extends React.Component<Props, State> {
 			exclude,
 			tempRangeDateFormat,
 			tempDateFormat,
-			precipDateFormat
+			precipDateFormat,
+			graph,
+			onGraphChange
 		} = this.props
-		const { graph } = this.state
+
 		const options = { ...graphOptions }
 		// $FlowFixMe
 		exclude.forEach(exclusion => {
@@ -81,7 +66,13 @@ class Graphs extends React.Component<Props, State> {
 			<div className={classes.root}>
 				<Grid container>
 					<Grid item xs={12} sm={6}>
-						<Select value={this.state.graph} onChange={this.handleSelectChange}>
+						<Select
+							value={graph}
+							onChange={(e: SyntheticEvent<EventTarget>) =>
+								/* $FlowFixMe */
+								onGraphChange(e.target.value)
+							}
+						>
 							{Object.keys(options).map(key => (
 								<MenuItem key={`graph-option-${key}`} value={key}>
 									{options[key]}

@@ -1,6 +1,9 @@
 // @flow
 import React from 'react'
 import { withStyles } from '@material-ui/core/styles'
+import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux'
+import * as HomeActions from '../../actions/home'
 import * as Units from './lib/units'
 import Summary from './summary'
 import PrecipitationIntensity from './field/precipitation-intensity'
@@ -22,7 +25,9 @@ type Props = {
 	classes: Object,
 	timezone: string,
 	units: Unit,
-	weather: DailyWeather
+	weather: DailyWeather,
+	graph: GraphOptions,
+	setDailyGraph: (dailyGraph: GraphOptions) => void
 }
 
 const styles = (theme: MuiTheme) => ({
@@ -42,12 +47,18 @@ const styles = (theme: MuiTheme) => ({
 
 class Daily extends React.Component<Props> {
 	render() {
-		const { weather, classes, timezone } = this.props
+		const { weather, classes, timezone, graph, setDailyGraph } = this.props
 		const units = Units[this.props.units]
 
 		return (
 			<div className={classes.root}>
-				<Graphs timezone={timezone} data={weather.data} exclude={['temp']} />
+				<Graphs
+					timezone={timezone}
+					data={weather.data}
+					exclude={['temp']}
+					graph={graph}
+					onGraphChange={setDailyGraph}
+				/>
 				<GeneralSummary summary={weather.summary} />
 				{weather.data.map(day => (
 					<div key={`day-${day.time}`} className={classes.day}>
@@ -84,4 +95,17 @@ class Daily extends React.Component<Props> {
 	}
 }
 
-export default withStyles(styles)(Daily)
+function mapStateToProps(state) {
+	return {
+		graph: state.home.dailyGraph
+	}
+}
+
+function mapDispatchToProps(dispatch: *) {
+	return bindActionCreators(HomeActions, dispatch)
+}
+
+export default connect(
+	mapStateToProps,
+	mapDispatchToProps
+)(withStyles(styles)(Daily))

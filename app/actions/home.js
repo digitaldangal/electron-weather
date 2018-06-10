@@ -5,6 +5,8 @@ export const WEATHER_FETCH_ERROR: ActionConst = 'WEATHER_FETCH_ERROR'
 export const SET_ACTIVE_TAB: ActionConst = 'SET_ACTIVE_TAB'
 export const SET_FETCHING_WEATHER: ActionConst = 'SET_FETCHING_WEATHER'
 export const SET_PREFERRED_UNITS: ActionConst = 'SET_PREFERRED_UNITS'
+export const SET_HOURLY_GRAPH: ActionConst = 'SET_HOURLY_GRAPH'
+export const SET_DAILY_GRAPH: ActionConst = 'SET_DAILY_GRAPH'
 
 export function setCoords(coords: Object) {
 	return {
@@ -45,5 +47,19 @@ export function setPreferredUnits(preferredUnits: Unit) {
 	return {
 		type: SET_PREFERRED_UNITS,
 		preferredUnits
+	}
+}
+
+export function setHourlyGraph(hourlyGraph: GraphOptions) {
+	return {
+		type: SET_HOURLY_GRAPH,
+		hourlyGraph
+	}
+}
+
+export function setDailyGraph(dailyGraph: GraphOptions) {
+	return {
+		type: SET_DAILY_GRAPH,
+		dailyGraph
 	}
 }

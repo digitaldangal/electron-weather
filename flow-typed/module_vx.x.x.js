@@ -188,6 +188,8 @@ export type Weather = {
 	}
 }
 
+export type GraphOptions = 'temp' | 'tempRange' | 'precip'
+
 export type MuiBreakpointSizes = 'xs' | 'sm' | 'md' | 'lg' | 'xl'
 
 export type MuiPaletteColor = {

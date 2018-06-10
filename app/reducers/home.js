@@ -4,7 +4,9 @@ import {
 	SET_WEATHER,
 	SET_ACTIVE_TAB,
 	SET_FETCHING_WEATHER,
-	SET_PREFERRED_UNITS
+	SET_PREFERRED_UNITS,
+	SET_HOURLY_GRAPH,
+	SET_DAILY_GRAPH
 } from '../actions/home'
 
 type actionType = {
@@ -32,7 +34,9 @@ export const defaultState = {
 		minutely: {}
 	},
 	activeTab: 0,
-	fetchingWeather: false
+	fetchingWeather: false,
+	hourlyGraph: 'temp',
+	dailyGraph: 'tempRange'
 }
 
 export default function home(state = defaultState, action: actionType) {
@@ -49,6 +53,12 @@ export default function home(state = defaultState, action: actionType) {
 			return { ...state, ...action }
 		case SET_PREFERRED_UNITS:
 			return { ...state, ...action }
+		case SET_HOURLY_GRAPH: {
+			return { ...state, ...action }
+		}
+		case SET_DAILY_GRAPH: {
+			return { ...state, ...action }
+		}
 		default:
 			return state
 	}

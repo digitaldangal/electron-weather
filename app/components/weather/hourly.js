@@ -1,6 +1,9 @@
 // @flow
 import React from 'react'
 import { withStyles } from '@material-ui/core/styles'
+import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux'
+import * as HomeActions from '../../actions/home'
 import * as Units from './lib/units'
 import Summary from './summary'
 import PrecipitationIntensity from './field/precipitation-intensity'
@@ -23,7 +26,9 @@ type Props = {
 	classes: Object,
 	timezone: string,
 	units: Unit,
-	weather: HourlyWeather
+	weather: HourlyWeather,
+	graph: GraphOptions,
+	setHourlyGraph: (hourlyGraph: GraphOptions) => void
 }
 
 const styles = (theme: MuiTheme) => ({
@@ -43,7 +48,7 @@ const styles = (theme: MuiTheme) => ({
 
 class Hourly extends React.Component<Props> {
 	render() {
-		const { weather, classes, timezone } = this.props
+		const { weather, classes, timezone, graph, setHourlyGraph } = this.props
 		const units = Units[this.props.units]
 
 		return (
@@ -52,7 +57,8 @@ class Hourly extends React.Component<Props> {
 					timezone={timezone}
 					data={weather.data}
 					exclude={['tempRange']}
-					defaultGraph="temp"
+					graph={graph}
+					onGraphChange={setHourlyGraph}
 					precipDateFormat="ddd h:mm a"
 				/>
 				<GeneralSummary summary={weather.summary} />
@@ -93,4 +99,17 @@ class Hourly extends React.Component<Props> {
 	}
 }
 
-export default withStyles(styles)(Hourly)
+function mapStateToProps(state) {
+	return {
+		graph: state.home.hourlyGraph
+	}
+}
+
+function mapDispatchToProps(dispatch: *) {
+	return bindActionCreators(HomeActions, dispatch)
+}
+
+export default connect(
+	mapStateToProps,
+	mapDispatchToProps
+)(withStyles(styles)(Hourly))
