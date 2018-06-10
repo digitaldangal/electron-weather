@@ -1,8 +1,9 @@
 export default (theme: MuiTheme) => {
 	const chartMargins = {
-		left: -(theme.spacing.unit * 3),
-		right: theme.spacing.unit * 3,
-		top: theme.spacing.unit * 3
+		left: theme.spacing.unit,
+		right: theme.spacing.unit,
+		top: theme.spacing.unit,
+		bottom: theme.spacing.unit
 	}
 
 	return {
@@ -37,7 +38,7 @@ export default (theme: MuiTheme) => {
 			margin: chartMargins
 		},
 		lineChart: {
-			margin: { ...chartMargins, top: 0 }
+			margin: chartMargins
 		},
 		responsiveContainer: {
 			minWidth: 300,

@@ -4,7 +4,6 @@ import {
 	Line,
 	XAxis,
 	YAxis,
-	CartesianGrid,
 	Tooltip,
 	Legend,
 	ResponsiveContainer
@@ -84,12 +83,25 @@ class PrecipitationGraph extends React.Component<Props> {
 		const { data, timezone, dateFormat } = this.props
 
 		return data.map(datum => ({
-			time: formatDate({ time: datum.time, timezone, format: dateFormat }),
+			time: formatDate({
+				time: datum.time,
+				timezone,
+				format: dateFormat
+			}),
 			'Precipitation Intensity': datum.precipIntensity,
 			'Precipitation Probability': datum.precipProbability * 100,
 			precipIntensityError: datum.precipIntensityError,
 			type: datum.precipType
 		}))
+	}
+
+	get displayIntensity() {
+		return (
+			this.props.data.reduce(
+				(prev, current) => prev + current.precipIntensity,
+				0
+			) > 0
+		)
 	}
 
 	render() {
@@ -108,31 +120,51 @@ class PrecipitationGraph extends React.Component<Props> {
 
 		const units = getUnits()
 
+		const { displayIntensity } = this
+
 		return (
 			<div className={classes.root}>
-				<ResponsiveContainer {...responsiveContainer}>
-					<LineChart data={this.weatherData} {...lineChart}>
+				<ResponsiveContainer {...responsiveContainer} aspect={4}>
+					<LineChart data={this.weatherData} {...lineChart} syncId="precip">
 						<Line
 							type="monotone"
 							dataKey="Precipitation Probability"
 							{...primaryLine}
 						/>
-						<Line
-							type="monotone"
-							dataKey="Precipitation Intensity"
-							{...secondaryLine}
-							dot={false}
+						<XAxis
+							dataKey="time"
+							{...xAxis}
+							orientation={displayIntensity ? 'top' : 'bottom'}
 						/>
-						<XAxis dataKey="time" {...xAxis} />
 						<YAxis domain={[0, 100]} {...yAxis} />
-						<CartesianGrid strokeDasharray="3 3" />
 						<Tooltip
 							{...tooltip}
 							content={props => <CustomTooltip {...props} units={units} />}
 						/>
-						<Legend {...legend} />
+						<Legend
+							{...legend}
+							verticalAlign={displayIntensity ? 'top' : 'bottom'}
+						/>
 					</LineChart>
 				</ResponsiveContainer>
+				{displayIntensity && (
+					<ResponsiveContainer {...responsiveContainer} aspect={4}>
+						<LineChart data={this.weatherData} {...lineChart} syncId="precip">
+							<Line
+								type="monotone"
+								dataKey="Precipitation Intensity"
+								{...secondaryLine}
+							/>
+							<XAxis dataKey="time" {...xAxis} />
+							<YAxis {...yAxis} />
+							<Tooltip
+								{...tooltip}
+								content={props => <CustomTooltip {...props} units={units} />}
+							/>
+							<Legend {...legend} />
+						</LineChart>
+					</ResponsiveContainer>
+				)}
 			</div>
 		)
 	}
