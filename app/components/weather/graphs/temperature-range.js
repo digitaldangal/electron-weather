@@ -1,13 +1,12 @@
 import React from 'react'
 import {
-	BarChart,
-	Bar,
+	AreaChart,
+	Area,
 	XAxis,
 	YAxis,
 	Tooltip,
 	Legend,
-	ResponsiveContainer,
-	Rectangle
+	ResponsiveContainer
 } from 'recharts'
 import { withTheme } from '@material-ui/core/styles'
 import formatDate from '../lib/format-date'
@@ -40,31 +39,31 @@ const TemperatureRangeGraph = (props: Props) => {
 		tooltip,
 		xAxis,
 		yAxis,
-		barChart
+		chart,
+		primaryArea,
+		secondaryArea
 	} = graphStyles(props.theme)
 
 	return (
 		<ResponsiveContainer {...responsiveContainer}>
-			<BarChart data={data} {...barChart}>
+			<AreaChart data={data} {...chart}>
 				<XAxis dataKey="time" {...xAxis} />
 				<YAxis {...yAxis} />
 				<Tooltip {...tooltip} />
 				<Legend {...legend} />
-				<Bar
-					background={false}
-					dataKey="Low"
-					fill={props.theme.palette.secondary.main}
-					unit={units.temperatureLow}
-					shape={barProps => <Rectangle {...barProps} visibility="inherit" />}
-				/>
-				<Bar
-					background={false}
+				<Area
 					dataKey="High"
 					fill={props.theme.palette.primary.main}
 					unit={units.temperatureHigh}
-					shape={barProps => <Rectangle {...barProps} visibility="inherit" />}
+					{...primaryArea}
 				/>
-			</BarChart>
+				<Area
+					dataKey="Low"
+					fill={props.theme.palette.secondary.main}
+					unit={units.temperatureLow}
+					{...secondaryArea}
+				/>
+			</AreaChart>
 		</ResponsiveContainer>
 	)
 }

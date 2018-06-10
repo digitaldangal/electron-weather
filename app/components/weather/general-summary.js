@@ -16,10 +16,7 @@ type Props = {
 	summary?: string
 }
 
-const GeneralSummary = ({
-	classes,
-	summary
-}: Props) => {
+const GeneralSummary = ({ classes, summary }: Props) => {
 	if (!summary) return null
 
 	return (
