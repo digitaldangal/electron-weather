@@ -6,7 +6,8 @@ import {
 	YAxis,
 	Tooltip,
 	Legend,
-	ResponsiveContainer
+	ResponsiveContainer,
+	CartesianGrid
 } from 'recharts'
 import { withTheme } from '@material-ui/core/styles'
 import formatDate from '../lib/format-date'
@@ -41,14 +42,15 @@ const TemperatureRangeGraph = (props: Props) => {
 		yAxis,
 		chart,
 		primaryArea,
-		secondaryArea
+		secondaryArea,
+		cartesianGrid
 	} = graphStyles(props.theme)
 
 	return (
 		<ResponsiveContainer {...responsiveContainer}>
 			<AreaChart data={data} {...chart}>
 				<XAxis dataKey="time" {...xAxis} />
-				<YAxis {...yAxis} />
+				<YAxis {...yAxis} unit={units.temperature} />
 				<Tooltip {...tooltip} />
 				<Legend {...legend} />
 				<Area
@@ -63,6 +65,7 @@ const TemperatureRangeGraph = (props: Props) => {
 					unit={units.temperatureLow}
 					{...secondaryArea}
 				/>
+				<CartesianGrid {...cartesianGrid} />
 			</AreaChart>
 		</ResponsiveContainer>
 	)

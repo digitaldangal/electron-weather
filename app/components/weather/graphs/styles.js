@@ -19,17 +19,23 @@ export default (theme: MuiTheme) => {
 				borderColor: theme.palette.background.paper,
 				boxShadow: theme.shadows[5],
 				borderRadius: 2
+			},
+			cursor: {
+				stroke: theme.palette.divider,
+				strokeWidth: 2
 			}
 		},
 		yAxis: {
 			tick: {
 				fill: theme.palette.text.primary
-			}
+			},
+			axisLine: false
 		},
 		xAxis: {
 			tick: {
 				fill: theme.palette.text.primary
-			}
+			},
+			axisLine: false
 		},
 		chart: {
 			margin: chartMargins
@@ -44,6 +50,10 @@ export default (theme: MuiTheme) => {
 			minWidth: 300,
 			minHeight: 100,
 			aspect: 3
+		},
+		cartesianGrid: {
+			strokeDasharray: '3 3',
+			stroke: theme.palette.divider
 		},
 		primaryLine: {
 			stroke: theme.palette.primary.main,

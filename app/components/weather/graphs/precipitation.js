@@ -6,7 +6,8 @@ import {
 	YAxis,
 	Tooltip,
 	Legend,
-	ResponsiveContainer
+	ResponsiveContainer,
+	CartesianGrid
 } from 'recharts'
 import { withStyles } from '@material-ui/core/styles'
 import { Typography } from '@material-ui/core'
@@ -115,7 +116,8 @@ class PrecipitationGraph extends React.Component<Props> {
 			xAxis,
 			yAxis,
 			tooltip,
-			legend
+			legend,
+			cartesianGrid
 		} = graphStyles(theme)
 
 		const units = getUnits()
@@ -136,11 +138,12 @@ class PrecipitationGraph extends React.Component<Props> {
 							{...xAxis}
 							orientation={displayIntensity ? 'top' : 'bottom'}
 						/>
-						<YAxis domain={[0, 100]} {...yAxis} />
+						<YAxis domain={[0, 100]} {...yAxis} unit="%" />
 						<Tooltip
 							{...tooltip}
 							content={props => <CustomTooltip {...props} units={units} />}
 						/>
+						<CartesianGrid {...cartesianGrid} />
 						<Legend
 							{...legend}
 							verticalAlign={displayIntensity ? 'top' : 'bottom'}
@@ -161,6 +164,7 @@ class PrecipitationGraph extends React.Component<Props> {
 								{...tooltip}
 								content={props => <CustomTooltip {...props} units={units} />}
 							/>
+							<CartesianGrid {...cartesianGrid} />
 							<Legend {...legend} />
 						</LineChart>
 					</ResponsiveContainer>
