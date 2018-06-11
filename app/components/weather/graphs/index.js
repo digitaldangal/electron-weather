@@ -5,6 +5,7 @@ import { Grid, Select, MenuItem } from '@material-ui/core'
 import Precipitation from './precipitation'
 import TemperatureRange from './temperature-range'
 import Temperature from './temperature'
+import Pressure from './pressure'
 
 export const PrecipitationGraph = Precipitation
 export const TemperatureRangeGraph = TemperatureRange
@@ -18,7 +19,8 @@ const styles = (theme: MuiTheme) => ({
 const graphOptions = {
 	tempRange: 'Temperature Range',
 	temp: 'Temperature',
-	precip: 'Precipitation'
+	precip: 'Precipitation',
+	pressure: 'Pressure'
 }
 
 type GraphOptions = $Keys<typeof graphOptions>
@@ -97,6 +99,13 @@ class Graphs extends React.Component<Props> {
 						)}
 						{graph === 'precip' && (
 							<Precipitation
+								data={data}
+								timezone={timezone}
+								dateFormat={precipDateFormat}
+							/>
+						)}
+						{graph === 'pressure' && (
+							<Pressure
 								data={data}
 								timezone={timezone}
 								dateFormat={precipDateFormat}

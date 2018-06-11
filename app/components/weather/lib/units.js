@@ -86,7 +86,7 @@ export const us: Units = {
 	precipIntensity: 'in./hr',
 	precipIntensityMax: 'in./hr',
 	precipProbability: '%',
-	pressure: 'mb.',
+	pressure: 'mbar',
 	temperature: '°F',
 	temperatureHigh: '°F',
 	temperatureLow: '°F',
