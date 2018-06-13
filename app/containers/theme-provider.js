@@ -10,7 +10,8 @@ function mapStateToProps(state) {
 			palette: {
 				type: state.theme.themePaletteType,
 				primary: colors[state.theme.primaryColor],
-				secondary: colors[state.theme.secondaryColor]
+				secondary: colors[state.theme.secondaryColor],
+				error: colors[state.theme.errorColor]
 			}
 		}
 	}

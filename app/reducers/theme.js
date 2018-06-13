@@ -1,7 +1,8 @@
 import {
 	SET_THEME_PALETTE_TYPE,
 	SET_PRIMARY_COLOR,
-	SET_SECONDARY_COLOR
+	SET_SECONDARY_COLOR,
+	SET_ERROR_COLOR
 } from '../actions/theme'
 
 type actionType = {
@@ -11,7 +12,8 @@ type actionType = {
 export const defaultState = {
 	themePaletteType: 'light',
 	primaryColor: 'indigo',
-	secondaryColor: 'pink'
+	secondaryColor: 'pink',
+	errorColor: 'red'
 }
 
 export default function(state = defaultState, action: actionType) {
@@ -21,6 +23,8 @@ export default function(state = defaultState, action: actionType) {
 		case SET_PRIMARY_COLOR:
 			return { ...state, ...action }
 		case SET_SECONDARY_COLOR:
+			return { ...state, ...action }
+		case SET_ERROR_COLOR:
 			return { ...state, ...action }
 		default:
 			return state

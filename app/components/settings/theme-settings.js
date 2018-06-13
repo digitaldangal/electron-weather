@@ -39,7 +39,9 @@ type Props = {
 	primaryColor: string,
 	setPrimaryColor: (primaryColor: string) => void,
 	secondaryColor: string,
-	setSecondaryColor: (secondaryColor: string) => void
+	setSecondaryColor: (secondaryColor: string) => void,
+	errorColor: string,
+	setErrorColor: (errorColor: string) => void
 }
 
 class ThemeSettings extends React.Component<Props> {
@@ -55,7 +57,8 @@ class ThemeSettings extends React.Component<Props> {
 			classes,
 			themePaletteType,
 			primaryColor,
-			secondaryColor
+			secondaryColor,
+			errorColor
 		} = this.props
 		return (
 			<div className={classes.root}>
@@ -69,6 +72,17 @@ class ThemeSettings extends React.Component<Props> {
 					</ExpansionPanelSummary>
 					<ExpansionPanelDetails>
 						<Grid container spacing={16}>
+							<Grid item xs={12}>
+								<FormControlLabel
+									control={
+										<Switch
+											checked={themePaletteType === 'dark'}
+											onChange={this.handleThemePaletteChange}
+										/>
+									}
+									label="Use Dark Theme"
+								/>
+							</Grid>
 							<Grid item xs={12} sm={6}>
 								<FormControl fullWidth>
 									<InputLabel>Primary Color</InputLabel>
@@ -107,15 +121,21 @@ class ThemeSettings extends React.Component<Props> {
 								</FormControl>
 							</Grid>
 							<Grid item xs={12} sm={6}>
-								<FormControlLabel
-									control={
-										<Switch
-											checked={themePaletteType === 'dark'}
-											onChange={this.handleThemePaletteChange}
-										/>
-									}
-									label="Use Dark Theme"
-								/>
+								<FormControl fullWidth>
+									<InputLabel>Error Color</InputLabel>
+									<Select
+										value={errorColor}
+										onChange={e => {
+											this.props.setErrorColor(e.target.value)
+										}}
+									>
+										{colorOptions.map(opt => (
+											<MenuItem value={opt.value} key={`error-${opt.value}`}>
+												{opt.label}
+											</MenuItem>
+										))}
+									</Select>
+								</FormControl>
 							</Grid>
 						</Grid>
 					</ExpansionPanelDetails>
@@ -129,7 +149,8 @@ function mapStateToProps(state) {
 	return {
 		themePaletteType: state.theme.themePaletteType,
 		primaryColor: state.theme.primaryColor,
-		secondaryColor: state.theme.secondaryColor
+		secondaryColor: state.theme.secondaryColor,
+		errorColor: state.theme.errorColor
 	}
 }
 
